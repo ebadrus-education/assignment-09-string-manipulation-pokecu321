@@ -3,20 +3,42 @@
 using namespace std;
 int main(){
 	string cari,hasil;
-	string profil = " nama : adin, \n kls : x rpl 2, \n absen : 15 \n ";
+	string profil = "nama : adin \nkls : x rpl 2 \nabsen : 15 \n";
 	cout << profil;
 	cout << "find = " <<cari;
 	cin >> cari;
+	
 	size_t posisi = profil.find(cari);
+	bool ditemukan = false;
 
-    // Check if the position returned is std::string::npos
-	if (posisi != string::npos) {
-		cout << "substring di temukan di index : " << posisi <<endl;
-   		cout << "substring = "<< profil.substr(posisi,'\n')<<endl;
-		cout << posisi<<endl;
+	while(posisi != string::npos){
+		ditemukan = true;
+		size_t awal = profil.rfind('\n',posisi);
+		size_t akhir = profil.find('\n',posisi);
+
+		if(awal == string::npos){
+			awal = 0;
+			
+		}
+		else{
+			awal += 1;
+		}
+		
+		if(akhir == string::npos){
+		akhir = profil.length();
+		}
+		
+		string baris;
+		baris = profil.substr(awal,akhir-awal);
+		cout << "hasil : "
+		<< baris<<endl;
+		posisi = profil.find(cari,posisi +1);
+
+
+
 	}
-	else {
-        	cout << "Substring tidak ditemukan :(" << endl;
-    }
 
+	if(!ditemukan){
+		cout << "tidak ditemukan!"<<endl;
+	}
 }
